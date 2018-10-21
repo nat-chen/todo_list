@@ -4,30 +4,24 @@ import './reset.css'
 import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
 import AV from 'leancloud-storage'
+import UserDialog from './UserDialog';
 
-var APP_ID = 'qabrTc8amuSgtNjWaAeyyCSc-gzGzoHsz';
-var APP_KEY = 'vx0Ln8QRoKGxwVkJ8cNAY0UE';
+// var Todo = AV.Object.extend('Todo');
+// var todo = new Todo();
+// todo.set('title', '工程师周会');
+// todo.set('content', '每周工程师会议，周一下午2点');
+// // 只要添加这一行代码，服务端就会自动添加这个字段
+// todo.set('location','会议室');
 
-AV.init({
-  appId: APP_ID,
-  appKey: APP_KEY
-});
+// todo.save().then(function (todo) {
+//   // 成功保存之后，执行其他逻辑
+//   console.log('success');
+// }, function (error) {
+//   // 异常处理
+//   console.error(error)
+//   console.log('failure');
+// });
 
-var Todo = AV.Object.extend('Todo');
-var todo = new Todo();
-todo.set('title', '工程师周会');
-todo.set('content', '每周工程师会议，周一下午2点');
-// 只要添加这一行代码，服务端就会自动添加这个字段
-todo.set('location','会议室');
-
-todo.save().then(function (todo) {
-  // 成功保存之后，执行其他逻辑
-  console.log('success');
-}, function (error) {
-  // 异常处理
-  console.error(error)
-  console.log('failure');
-});
 
 class App extends Component {
   constructor(props){
@@ -94,6 +88,7 @@ class App extends Component {
             onSubmit={this.addTodo.bind(this)} />
         </div>
         <ol className="todoList">{todos}</ol>
+        <UserDialog />
       </div>
     ) 
   }
