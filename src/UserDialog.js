@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './UserDialog.css';
+import { signUp, signOut, signIn } from './leanCloud';
 
 export default class UserDialog extends Component {
   constructor(props) {
@@ -20,11 +21,37 @@ export default class UserDialog extends Component {
   }
 
   signUp(event) {
-    
+    event.preventDefault();
+    let { username, password } = this.state.formData;
+    let success = user => this.props.onSignUp.call(null, user);
+    let error = error => {
+      switch(error.code) {
+        case 202:
+          alert('用户名已被占用, 请重新命名');
+          break;
+        default: 
+          console.log(errr);
+          break;
+      }
+    };
+    signUp(username, password, success, error);
   }
 
   signIn(event) {
-
+    event.preventDefault();
+    let { username, password } = this.state.formData;
+    let success = user => this.props.onSignIn.call(null, user);
+    let error = error => {
+      switch(error.code) {
+        case 210:
+          alert('用户名或密码不匹配');
+          break;
+        default: 
+          console.log(errr);
+          break;
+      }
+    };
+    signIn(username, password, success, error);
   }
 
   changeFormData(key, event) {
@@ -79,17 +106,19 @@ export default class UserDialog extends Component {
     return (
       <div className="UserDialog-Wrapper">
         <div className="UserDialog">
-          <nav onChange={this.switch.bind(this)}>
+          <nav>
             <label>
               <input type="radio"
                 value="signUp"
                 checked={this.state.selected === 'signUp'}
+                onChange={this.switch.bind(this)}
               />注册
             </label>
             <label>
               <input type="radio"
                 value="signIn"
                 checked={this.state.selected === 'signIn'}
+                onChange={this.switch.bind(this)}
               />登录
             </label>
           </nav>
