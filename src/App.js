@@ -3,14 +3,18 @@ import './App.css';
 import './reset.css'
 import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
+import * as localStore from './localStore';
 
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
       newTodo: '',
-      todoList: []
+      todoList: localStore.load('todoList') || [],
     }
+  }
+  componentDidUpdate() {
+    localStore.save('todoList', this.state.todoList);
   }
 
   toggle(event, todo) {
@@ -35,7 +39,7 @@ class App extends Component {
     this.setState({
       newTodo: '',
       todoList: this.state.todoList,
-    })
+    });
   }
 
   delete(event, todo) {
