@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 
 export default class TodoInput extends Component {
-  handleSumbit(event) {
+  submit(event) {
     if (event.key === 'Enter') {
-      console.log('用户按回车了')
+      this.props.onSubmit(event);
     }
   }
+
+  changeTitle(event) {
+    this.props.onChange(event);
+  }
+
   render() {
     return (
-      <input type="text" 
-        defaultValue={this.props.content}
-        onKeyPress={this.handleSumbit.bind(this)} />
+      <input type="text"
+        value={this.props.content}
+        onKeyPress={this.submit.bind(this)}
+        onChange={this.changeTitle.bind(this)} />
     )
   }
 }
