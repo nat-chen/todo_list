@@ -30,7 +30,7 @@ export default class UserDialog extends Component {
           alert('用户名已被占用, 请重新命名');
           break;
         default: 
-          console.log(errr);
+          console.log(error);
           break;
       }
     };
@@ -47,7 +47,7 @@ export default class UserDialog extends Component {
           alert('用户名或密码不匹配');
           break;
         default: 
-          console.log(errr);
+          console.log(error);
           break;
       }
     };
