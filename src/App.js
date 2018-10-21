@@ -3,18 +3,41 @@ import './App.css';
 import './reset.css'
 import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
-import * as localStore from './localStore';
+import AV from 'leancloud-storage'
+
+var APP_ID = 'qabrTc8amuSgtNjWaAeyyCSc-gzGzoHsz';
+var APP_KEY = 'vx0Ln8QRoKGxwVkJ8cNAY0UE';
+
+AV.init({
+  appId: APP_ID,
+  appKey: APP_KEY
+});
+
+var Todo = AV.Object.extend('Todo');
+var todo = new Todo();
+todo.set('title', '工程师周会');
+todo.set('content', '每周工程师会议，周一下午2点');
+// 只要添加这一行代码，服务端就会自动添加这个字段
+todo.set('location','会议室');
+
+todo.save().then(function (todo) {
+  // 成功保存之后，执行其他逻辑
+  console.log('success');
+}, function (error) {
+  // 异常处理
+  console.error(error)
+  console.log('failure');
+});
 
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
       newTodo: '',
-      todoList: localStore.load('todoList') || [],
+      todoList: [],
     }
   }
   componentDidUpdate() {
-    localStore.save('todoList', this.state.todoList);
   }
 
   toggle(event, todo) {
